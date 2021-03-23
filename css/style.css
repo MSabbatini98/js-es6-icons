@@ -60,9 +60,15 @@ body {
   text-align: center;
   filter: drop-shadow(1px 1px 1px rgba(0,0,0, 0.5));
 }
+
 .box_icons .title {
   font-size: 14px;
 }
+
+#type option {
+  text-transform: capitalize;
+}
+
 /* 
 .green {
   color: greenyellow;

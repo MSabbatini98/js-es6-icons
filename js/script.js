@@ -108,10 +108,11 @@ const icons = [
     category: "animal"
   },
 ];
+const icons_container = $(".box_icons");
+const select = $("#type");
 
+// **** Milestone 1 Partendo dalla seguente struttura dati e le stampiamo
 
-// **** Milestone 1
-//* Partendo dalla seguente struttura dati , mostriamo in pagina tutte le icone disponibili come da layout.
 // Le stampo dopo averle colorate
 // icons.forEach((icona) => {
 
@@ -125,49 +126,108 @@ const icons = [
 //     $(".box_icons").append(html_to_add);
 // });
 
-//****** Milestone 2
-//* Coloriamo le icone per tipo
+//****** Milestone 2 Coloriamo le icone per tipo
 
 const colors = [ //definisco i colori
-  'greenyellow', //food
-  'coral', //beverage
-  'blue', //animals
+  {
+    category : "food",
+    color : "greenyellow"
+  }, 
+  {
+    category : "beverage",
+    color : "coral"
+  },
+  {
+    category : "animal",
+    color : "blue"
+  }
 ];
 
-const categories = [];
-
-icons.forEach((item) => { //trova le diverse catogorie
-  if (categories.includes(item.category) == false) {
-    categories.push(item.category);
-  }
-});
-
-console.log(colors);
-console.log(categories);
+const categories = getCategory(icons);
 
 //assegna ad ogni categoria un colore, in ordine di index
 const colorized_icons = icons.map((icon) => { 
-  const category_index = categories.indexOf(icon.category);
-  // console.log(colors[category_index]);
-  const item_color = colors[category_index];
-  icon.color = item_color;  
-  // console.log("icon", icon);
-  
+
+  let  icon_color;
+
+  colors.forEach((colore) => {
+    
+    if(icon.category == colore.category) {
+      icon_color = colore.color;
+    }
+  });
+
+  icon.color = icon_color;  
   return icon;
+
 });
 
-//stampo le icone colorate
-colorized_icons.forEach((icona) => {
+  printIcons(icons_container, colorized_icons);
 
-  const {name, prefix, family, color} = icona; //senza questo comando  avrei dovuto usare invece che ${family} -> ${icons.family} 
-  const html_to_add =
-  `<div>
-      <i class="${family} ${prefix}${name}" style= "color:${color}"></i>
-      <div class="title">${name}</div>
-    </div>`;
+//*****  Milestone 3 Creiamo una select con i tipi di icone e usiamola per filtrare le icone
 
-    $(".box_icons").append(html_to_add);
+getOptions(select, categories);
+
+//controllo quando viene modificato il menu a tendina, e quando viene modificato esegue il codice
+select.change( function() {
+  
+  const selected_option = $(this).val();
+  
+  let icons_filtered = colorized_icons.filter((icons) => {
+    return icons.category == selected_option;
+  }); 
+  
+  if (icons_filtered.length == 0 ) {
+    icons_filtered = colorized_icons;
+  }
+
+  printIcons(icons_container, icons_filtered);
 });
 
-//*****  Milestone 3
-//** */ Creiamo una select con i tipi di icone e usiamola per filtrare le icone
+
+/////////////////////////////////////////////////////////////////////////////////
+
+// ? funzioni utilizzate: printIcons
+
+
+// ! funzione che svuota il box_icons e loriempie in base all'opzione selezionata da menu a tendina nell'HTML
+function printIcons(target, icons) {
+  //svuota il contenuto
+  icons_container.html("");
+
+  icons.forEach((icona) => {
+
+    const {name, prefix, family, color} = icona; //senza questo comando  avrei dovuto usare invece che ${family} -> ${icons.family} 
+    const html_div =
+    `<div>
+        <i class="${family} ${prefix}${name}" style= "color:${color}"></i>
+        <div class="title">${name}</div>
+      </div>`;
+  
+      $(".box_icons").append(html_div);
+  });
+}
+
+// ! funzione che trova le diverse categorie e le mette in un array (categories)
+function getCategory (icons) {
+
+  const categories = [];
+  
+  icons.forEach((item) => { //trova le diverse catogorie
+    if (categories.includes(item.category) == false) {
+      categories.push(item.category);
+    }
+  });
+  return categories;
+}
+
+// ! funzione che aggiunge al menu a tendina tutte le varie categorie che chiamiamo opzioni
+function getOptions(target, options) {
+  //aggiungo le varie opzioni nel menu a tendina
+  options.forEach((categ) => {
+    
+    const html_option = `<option value="${categ}"> ${categ} </option>`
+    select.append(html_option);
+  });
+  return options;
+}
