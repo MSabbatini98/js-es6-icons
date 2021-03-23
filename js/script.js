@@ -1,8 +1,6 @@
 
 // 
-// Milestone 2
-// Coloriamo le icone per tipo
-// 
+
 // Milestone 3
 // Creiamo una select con i tipi di icone e usiamola per filtrare le icone
 
@@ -121,10 +119,9 @@ const icons = [
 // **** Milestone 1
 //* Partendo dalla seguente struttura dati , mostriamo in pagina tutte le icone disponibili come da layout.
 
-icons.forEach((icon) => {
+icons.forEach((icona) => {
 
-  const {name, prefix, family} = icon;
-
+  const {name, prefix, family} = icona; //senza questo comando  avrei dovuto usare invece che ${family} -> ${icons.family} 
   const html_to_add =
   `<div>
       <i class="${family} ${prefix}${name}"></i>
@@ -132,4 +129,34 @@ icons.forEach((icon) => {
     </div>`;
 
     $(".box_icons").append(html_to_add);
+});
+
+//****** Milestone 2
+//* Coloriamo le icone per tipo
+
+const colors = [
+  'blue', //animals
+  'coral', //beverage
+  'greenyellow' //food
+];
+
+const categories = [];
+//  {
+//   name: 'apple-alt',
+//   family: 'fas',
+//   prefix: 'fa-',
+//   category: "food"
+// }
+
+icons.forEach((item,index) => {
+  if (categories.includes(item.categories) == false) {
+    categories.push(item.category);
+  }
+});
+
+console.log(colors);
+
+const colorized_icons = icons.map((icon) => {
+  const category_index = categories.indexOf(icon.category);
+  console.log(colors[category_index]);
 });
