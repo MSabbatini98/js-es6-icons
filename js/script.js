@@ -1,5 +1,4 @@
-// Milestone 1
-// Partendo dalla seguente struttura dati , mostriamo in pagina tutte le icone disponibili come da layout.
+
 // 
 // Milestone 2
 // Coloriamo le icone per tipo
@@ -117,3 +116,20 @@ const icons = [
     category: "animal"
   },
 ];
+
+
+// **** Milestone 1
+//* Partendo dalla seguente struttura dati , mostriamo in pagina tutte le icone disponibili come da layout.
+
+icons.forEach((icon) => {
+
+  const {name, prefix, family} = icon;
+
+  const html_to_add =
+  `<div>
+      <i class="${family} ${prefix}${name}"></i>
+      <div class="title">${name}</div>
+    </div>`;
+
+    $(".box_icons").append(html_to_add);
+});

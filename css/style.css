@@ -39,7 +39,7 @@ body {
   margin-left: 10px;
 }
 
-.icons {
+.box_icons {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -50,7 +50,7 @@ body {
   font-size: 200%;
   background-color: rgb(221, 221, 221);
 }
-.icons > div {
+.box_icons > div {
   flex-basis: calc(100% / 6 - 20px );
   min-width: 150px;
   margin: 20px;
@@ -60,6 +60,6 @@ body {
   text-align: center;
   filter: drop-shadow(1px 1px 1px rgba(0,0,0, 0.5));
 }
-.icons .title {
+.box_icons .title {
   font-size: 14px;
 }
