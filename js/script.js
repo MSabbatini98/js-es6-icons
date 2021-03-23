@@ -1,9 +1,3 @@
-
-// 
-
-// Milestone 3
-// Creiamo una select con i tipi di icone e usiamola per filtrare le icone
-
 const icons = [
   {
     name: 'apple-alt',
@@ -118,45 +112,62 @@ const icons = [
 
 // **** Milestone 1
 //* Partendo dalla seguente struttura dati , mostriamo in pagina tutte le icone disponibili come da layout.
+// Le stampo dopo averle colorate
+// icons.forEach((icona) => {
 
-icons.forEach((icona) => {
+//   const {name, prefix, family} = icona; //senza questo comando  avrei dovuto usare invece che ${family} -> ${icons.family} 
+//   const html_to_add =
+//   `<div>
+//       <i class="${family} ${prefix}${name}"></i>
+//       <div class="title">${name}</div>
+//     </div>`;
 
-  const {name, prefix, family} = icona; //senza questo comando  avrei dovuto usare invece che ${family} -> ${icons.family} 
+//     $(".box_icons").append(html_to_add);
+// });
+
+//****** Milestone 2
+//* Coloriamo le icone per tipo
+
+const colors = [ //definisco i colori
+  'greenyellow', //food
+  'coral', //beverage
+  'blue', //animals
+];
+
+const categories = [];
+
+icons.forEach((item) => { //trova le diverse catogorie
+  if (categories.includes(item.category) == false) {
+    categories.push(item.category);
+  }
+});
+
+console.log(colors);
+console.log(categories);
+
+//assegna ad ogni categoria un colore, in ordine di index
+const colorized_icons = icons.map((icon) => { 
+  const category_index = categories.indexOf(icon.category);
+  // console.log(colors[category_index]);
+  const item_color = colors[category_index];
+  icon.color = item_color;  
+  // console.log("icon", icon);
+  
+  return icon;
+});
+
+//stampo le icone colorate
+colorized_icons.forEach((icona) => {
+
+  const {name, prefix, family, color} = icona; //senza questo comando  avrei dovuto usare invece che ${family} -> ${icons.family} 
   const html_to_add =
   `<div>
-      <i class="${family} ${prefix}${name}"></i>
+      <i class="${family} ${prefix}${name}" style= "color:${color}"></i>
       <div class="title">${name}</div>
     </div>`;
 
     $(".box_icons").append(html_to_add);
 });
 
-//****** Milestone 2
-//* Coloriamo le icone per tipo
-
-const colors = [
-  'blue', //animals
-  'coral', //beverage
-  'greenyellow' //food
-];
-
-const categories = [];
-//  {
-//   name: 'apple-alt',
-//   family: 'fas',
-//   prefix: 'fa-',
-//   category: "food"
-// }
-
-icons.forEach((item,index) => {
-  if (categories.includes(item.categories) == false) {
-    categories.push(item.category);
-  }
-});
-
-console.log(colors);
-
-const colorized_icons = icons.map((icon) => {
-  const category_index = categories.indexOf(icon.category);
-  console.log(colors[category_index]);
-});
+//*****  Milestone 3
+//** */ Creiamo una select con i tipi di icone e usiamola per filtrare le icone
